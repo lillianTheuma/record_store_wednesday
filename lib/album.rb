@@ -10,6 +10,7 @@ class Album
   def initialize(attributes)
     @name = attributes.fetch(:name)
     @id = attributes.fetch(:id) || @@total_rows += 1
+
   end
 
   def self.all

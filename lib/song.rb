@@ -1,6 +1,6 @@
 class Song
   attr_reader :id
-  attr_accessor :name, :album_id
+  attr_accessor :name, :album_id, :artist_name, :year_recorded, :studio
 
   @@songs = {}
   @@total_rows = 0
@@ -9,6 +9,9 @@ class Song
     @name = attributes.fetch(:name)
     @album_id = attributes.fetch(:album_id)
     @id = attributes.fetch(:id) || @@total_rows += 1
+    @artist_name = attributes.fetch(:artist_name)
+    @year_recorded = attributes.fetch(:year_recorded)
+    @studio = attributes.fetch(:studio)
   end
 
   def ==(song_to_compare)
@@ -20,17 +23,20 @@ class Song
   end
 
   def save
-    @@songs[self.id] = Song.new({:name => self.name, :album_id => self.album_id, :id => self.id})
+    @@songs[self.id] = Song.new({:name => @name, :album_id => @album_id, :id => @id, :artist_name => @artist_name, :year_recorded => @year_recorded, :studio => @studio})
   end
 
   def self.find(id)
     @@songs[id]
   end
 
-  def update(name, album_id)
+  def update(name, album_id, artist_name, year_recorded, studio)
     self.name = name
     self.album_id = album_id
-    @@songs[self.id] = Song.new({:name => self.name, :album_id => self.album_id, :id => self.id})
+    self.artist_name = artist_name
+    self.year_recorded = year_recorded
+    self.studio = studio
+    @@songs[self.id] = Song.new({:name => @name, :album_id => @album_id, :id => @id, :artist_name => @artist_name, :year_recorded => @year_recorded, :studio => @studio})
   end
 
   def delete
